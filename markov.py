@@ -4,16 +4,17 @@ from random import choice
 
 
 def open_and_read_file(file_path):
-    """Take file path as string; return text as string.
+    """Take file path as stri_ng; return text as string.
 
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-    content = open(filepath).read()
+    content = open(file_path).read()
+    # print (content)
 
     return content
-    
-open_and_read_file(green-eggs.txt)
+
+open_and_read_file("green-eggs.txt")
 
 # def make_chains(text_string):
 #     """Take input text as string; return dictionary of Markov chains.
