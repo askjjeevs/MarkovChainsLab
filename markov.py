@@ -9,43 +9,58 @@ def open_and_read_file(file_path):
     Takes a string that is a file path, opens the file, and turns
     the file's contents as one string of text.
     """
-    content = open(file_path).read()
+    content = open(file_path)
+    file_to_read = content.read()
+    content.close
     # print (content)
 
-    return content
+    return file_to_read
 
 open_and_read_file("green-eggs.txt")
 
-# def make_chains(text_string):
-#     """Take input text as string; return dictionary of Markov chains.
+def make_chains(text_string):
+    """Take input text as string; return dictionary of Markov chains.
+    
+    A chain will be a key that consists of a tuple of (word1, word2)
+    and the value would be a list of the word(s) that follow those two
+    words in the input text.
 
-#     A chain will be a key that consists of a tuple of (word1, word2)
-#     and the value would be a list of the word(s) that follow those two
-#     words in the input text.
+    For example:
 
-#     For example:
+        >>> chains = make_chains('hi there mary hi there juanita')
 
-#         >>> chains = make_chains('hi there mary hi there juanita')
+    Each bigram (except the last) will be a key in chains:
 
-#     Each bigram (except the last) will be a key in chains:
+        >>> sorted(chains.keys())
+        [('hi', 'there'), ('mary', 'hi'), ('there', 'mary')]
 
-#         >>> sorted(chains.keys())
-#         [('hi', 'there'), ('mary', 'hi'), ('there', 'mary')]
+    Each item in chains is a list of all possible following words:
 
-#     Each item in chains is a list of all possible following words:
+        >>> chains[('hi', 'there')]
+        ['mary', 'juanita']
 
-#         >>> chains[('hi', 'there')]
-#         ['mary', 'juanita']
+        >>> chains[('there','juanita')]
+        [None]
+    """
+    file = open('green-eggs.txt')
+    words = text_string.split()
 
-#         >>> chains[('there','juanita')]
-#         [None]
-#     """
+    chains = {}
+    
+    #loop over words 
+    for i in range(len(words) - 2):
+    # assign the keys and values to its own tuple and list
+        keys = (words[i], words[i + 1])
+        value = words [i+2]
+    # add key to chain; first check if key is in chain
+        if keys not in chains:
+            chains[keys] = []
+        else:
+            chains[keys].append(value)
+        
+    return chains
 
-#     chains = {}
-
-#     # your code goes here
-
-#     return chains
+make_chains("Would you could you in a house? Would you could you with a mouse?")
 
 
 # def make_text(chains):
