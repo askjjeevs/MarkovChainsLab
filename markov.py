@@ -16,7 +16,6 @@ def open_and_read_file(file_path):
 
     return file_to_read
 
-open_and_read_file("green-eggs.txt")
 
 def make_chains(text_string):
     """Take input text as string; return dictionary of Markov chains.
@@ -42,36 +41,42 @@ def make_chains(text_string):
         >>> chains[('there','juanita')]
         [None]
     """
-    file = open('green-eggs.txt')
     words = text_string.split()
 
     chains = {}
     
     #loop over words 
     for i in range(len(words) - 2):
-    # assign the keys and values to its own tuple and list
-        keys = (words[i], words[i + 1])
+    # assign the keys and values to its own tuple and list 
+        key = (words[i], words[i + 1])
         value = words [i+2]
     # add key to chain; first check if key is in chain
-        if keys not in chains:
-            chains[keys] = []
+        if key not in chains:
+            chains[key] = []
         else:
-            chains[keys].append(value)
-        
+            chains[key].append(value)
+
+    # print(chains)
     return chains
 
-make_chains("Would you could you in a house? Would you could you with a mouse?")
+def make_text(chains):
+    """Return text from chains."""
 
+    key = choice(list(chains.keys()))  # key becomes a tuple: randomly chosen from a newly created list of keys of the 'chains'{} directory 
+    words = [key[0], key[1]]  # ('would', 'you')
+    word = choice(chains[key])
 
-# def make_text(chains):
-#     """Return text from chains."""
+    # Keep looping until we reach a value of None
+    # (which would mean it was the end of our original text)
+    # Note that for long texts (like a full book), this might mean
+    # it would run for a very long time.
 
-#     words = []
+    while word is not None:
+        key = (key[1], word)
+        words.append(word)
+        word = choice(chains[key])
 
-#     # your code goes here
-
-#     return ' '.join(words)
-
+    return ' '.join(words)
 
 # input_path = 'green-eggs.txt'
 
